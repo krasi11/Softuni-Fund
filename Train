@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ListExcs
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> ListofPassengers = Console.ReadLine().Split().Select(int.Parse).ToList();
+            int maxCapacity = int.Parse(Console.ReadLine());
+            string Command = Console.ReadLine();
+            while (!Command.Contains("end"))
+            {
+                var data = Command.Split();
+                if (data[0] == "Add")
+                {
+                    int wagon = int.Parse(data[1]);
+                    ListofPassengers.Add(wagon);
+                }
+                else
+                {
+                    int passengers = int.Parse(data[0]);
+                    for (int i = 0; i < ListofPassengers.Count; i++)
+                    {
+                        if (ListofPassengers[i]+passengers<=maxCapacity)
+                        {
+                            ListofPassengers[i] += passengers;
+                            break;
+                        }
+                    }
+                   
+                }
+                Command = Console.ReadLine();
+                
+            }
+            Console.WriteLine(string.Join(" ", ListofPassengers));
+
+        }
+        
+    }
+}
