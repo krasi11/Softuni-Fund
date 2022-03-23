@@ -1,0 +1,65 @@
+using System;
+
+namespace TheatrePromotion 
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string day = Console.ReadLine();
+            int age = int.Parse(Console.ReadLine());
+            double amount = 0;
+
+            if (day=="Weekday")
+            {
+                if (age>0&&age<=18||age>64&&age<=122)
+                {
+                    amount = 12;
+                }
+                else if (age>18&&age<=64)
+                {
+                    amount = 18;
+                }
+            }
+            if (day=="Weekend")
+            {
+                if (age > 0 && age <= 18 || age > 64 && age <= 122)
+                {
+                    amount = 15;
+
+                }
+                else if (age > 18 && age <= 64)
+                {
+                    amount = 20;
+                }
+                
+            }
+            else if (day == "Holiday")
+            {
+                if (age > 0 && age <= 18)
+                {
+                    amount = 5;
+                }
+                if (age > 64 && age <= 122)
+                {
+                    amount = 10;
+                }
+                else if (age > 18 && age <= 64)
+
+                {
+                    amount = 12;
+                   
+                }
+               
+            }
+            if (amount != 0)
+            {
+                Console.WriteLine($"{amount}$");
+            }
+            else
+            {
+                Console.WriteLine("Error!");
+            }
+        }
+    }
+}
