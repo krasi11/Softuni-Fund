@@ -1,0 +1,75 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ListExcs
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> ListOfNumbers = Console.ReadLine().Split().Select(int.Parse).ToList();
+            string Commands = Console.ReadLine();
+            while (Commands != "End")
+            {
+                string Type = Commands.Split().ElementAt(0);
+                if (Type=="Add")
+                {
+                    int NumberToAdd = int.Parse(Commands.Split().ElementAt(1));
+                    ListOfNumbers.Add(NumberToAdd);
+                }
+                else if (Type=="Remove")
+                {
+                    int IndexToRemove = int.Parse(Commands.Split().ElementAt(1));
+                    if (IndexToRemove>=0&&IndexToRemove<=ListOfNumbers.Count)
+                    {
+                        ListOfNumbers.RemoveAt(IndexToRemove);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid index");
+                    }
+                }
+                else if (Type=="Shift")
+                {
+                    string Direction = Commands.Split().ElementAt(1);
+                    int Count = int.Parse(Commands.Split().ElementAt(2));
+                    if (Direction=="left")
+                    {
+                        for (int i = 0; i < Count; i++)
+                        {
+                            int FirstNumber = ListOfNumbers[0];
+                            ListOfNumbers.RemoveAt(0);
+                            ListOfNumbers.Add(FirstNumber);
+                        }
+                    }
+                    else if(Direction=="right")
+                    {
+                        for (int i = 0; i < Count; i++)
+                        {
+                            int FirstNumber = ListOfNumbers[ListOfNumbers.Count - 1];
+                            ListOfNumbers.RemoveAt(ListOfNumbers.Count - 1);
+                            ListOfNumbers.Insert(0, FirstNumber);
+                        }
+                    }
+
+                }
+                else if (Type=="Insert")
+                {
+                    int NumberToInsert = int.Parse(Commands.Split().ElementAt(1));
+                    int IndexToInsertAt = int.Parse(Commands.Split().ElementAt(2));
+                    if (IndexToInsertAt>=0&&IndexToInsertAt<=ListOfNumbers.Count)
+                    {
+                        ListOfNumbers.Insert(IndexToInsertAt, NumberToInsert);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid index");
+                    }
+                }
+                Commands = Console.ReadLine();
+            }
+            Console.WriteLine(string.Join(" ",ListOfNumbers));
+        }
+    }
+}
