@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ListExcs
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> ListOfNumbers = Console.ReadLine().Split().Select(int.Parse).ToList();
+            string Command = Console.ReadLine();
+            while (!Command.Contains("end"))
+            {
+                string[] data = Command.Split();
+                var Type = data[0];
+                if (data[0]=="Delete")
+                {
+                    int NumberToDelete = int.Parse(data[1]);
+                    ListOfNumbers.RemoveAll(x => x == NumberToDelete);
+                }
+                else if (Type == "Insert")
+                {
+                    int NumberToInsert = int.Parse(data[1]);
+                    int Position = int.Parse(data[2]);
+                    ListOfNumbers.Insert(Position,NumberToInsert);
+                }
+                Command = Console.ReadLine();
+            }                       
+            Console.WriteLine(string.Join(" ", ListOfNumbers));
+        }      
+    }
+}
