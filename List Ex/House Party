@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ListExcs
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> Guests = new List<string> { };
+            int NumberOfGuests = int.Parse(Console.ReadLine());
+            for (int i = 0; i<NumberOfGuests; i++)
+            {
+                string infromation = Console.ReadLine();
+                string name = infromation.Split().First();
+                string ToGoOrNotToGo = infromation.Split().ElementAt(2);
+                if (Guests.Contains(name)&&ToGoOrNotToGo=="going!")
+                {
+                    Console.WriteLine($"{name} is already in the list!");
+                }
+                else if (Guests.Contains(name)&&ToGoOrNotToGo == "not")
+                {
+                    Guests.Remove(name);
+                }
+                else if (!Guests.Contains(name) && ToGoOrNotToGo == "going!")
+                {
+                    Guests.Add(name);
+                }
+                else
+                {
+                    Console.WriteLine($"{name} is not in the list!");
+                }
+            }
+            Console.WriteLine(string.Join(Environment.NewLine, Guests));
+        }      
+    }
+}
