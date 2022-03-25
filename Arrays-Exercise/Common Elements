@@ -1,0 +1,26 @@
+using System;
+using System.Linq;
+
+namespace ArraysPart2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] firstArray = Console.ReadLine().Split();
+            string[] secondArray = Console.ReadLine().Split();
+            foreach (string itemTwo in secondArray)
+            {
+                for (int i = 0; i < firstArray.Length; i++)
+                {
+                    string itemOne = firstArray[i];
+                    if (itemOne == itemTwo)
+                    {
+                        Console.Write(itemOne + " ");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
