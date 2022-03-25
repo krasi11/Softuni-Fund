@@ -1,0 +1,39 @@
+using System;
+using System.Linq;
+
+namespace ArraysPart2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] arr = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+            int[] newArr = new int[arr.Length];
+            int topInteger = 0;
+            for (int i = 0; i <= arr.Length-1; i++)
+            {
+                int currentNummber = arr[i];
+                bool isTopInteger = true;
+                // Nested loop for right side Check 
+                for (int toMyRight = i+1; toMyRight < arr.Length; toMyRight++)
+                {
+                    int nextNumber = arr[toMyRight];
+                    if (currentNummber<=nextNumber)
+                    {
+                        isTopInteger = false;break;
+                    }
+                }
+                if (isTopInteger)
+                {
+                    newArr[topInteger] = currentNummber;
+                    topInteger++;
+                }
+            }
+            for (int i = 0; i < topInteger; i++)
+            {
+                int currentTopInteger = newArr[i];
+                Console.Write($"{currentTopInteger} ");
+            }
+        }
+    }
+}
