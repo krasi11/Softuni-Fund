@@ -1,0 +1,25 @@
+using System;
+using System.Linq;
+
+namespace ArrayExc
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] values = Console.ReadLine().Split().Select(int.Parse).ToArray();
+            int SpecialKey = int.Parse(Console.ReadLine());
+            for (int i = 0; i < values.Length; i++)
+            {
+                for (int k = i+1; k < values.Length; k++)
+                {
+                    if (values[i]+values[k]==SpecialKey)
+                    {
+                        Console.WriteLine(values[i] + " " + values[k]);
+                    }
+                }
+            }
+
+        }
+    }
+}
