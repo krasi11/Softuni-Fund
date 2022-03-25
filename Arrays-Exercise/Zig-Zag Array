@@ -1,0 +1,39 @@
+using System;
+using System.Linq;
+
+namespace Arrays
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int number = int.Parse(Console.ReadLine());
+
+            int[] array1 = new int[number];
+            int[] array2 = new int[number];
+
+            for (int row = 1; row <= number; row++)
+            {
+                int[] currentRow = Console.ReadLine()
+                    .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                    .Select(int.Parse)
+                    .ToArray();
+                int firstNumber = currentRow[0];
+                int secondNumber = currentRow[1];
+                if (row%2 !=0)
+                {
+                    array1[row - 1] += firstNumber;
+                    array2[row - 1] += secondNumber;
+                }
+                else
+                {
+                    array1[row - 1] += secondNumber;
+                    array2[row - 1] += firstNumber;
+                }
+            }
+            Console.WriteLine(string.Join(" ", array1));
+            Console.WriteLine(string.Join(" ", array2));
+        }
+    }
+}
+
