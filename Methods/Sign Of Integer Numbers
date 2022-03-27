@@ -1,0 +1,53 @@
+using System;
+
+namespace MethodsPartTwo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int Number = int.Parse(Console.ReadLine());
+            PrintSumNumber(Number);
+        }
+        static void PrintSumNumber(int Number)
+        {
+            if (Number>0)
+            {
+                Console.WriteLine($"The number {Number} is positive.");
+            }
+            else if (Number<0)
+            {
+                Console.WriteLine($"The number {Number} is negative.");
+            }
+            else
+            {
+                Console.WriteLine($"The number {Number} is zero.");
+            }
+        }
+
+        static void PrintGrades(double Grade)
+        {
+            string GradeInWord = string.Empty;
+            if (Grade>=2&&Grade<=2.99)
+            {
+                Console.WriteLine("Fail");
+            }
+            if (Grade >= 3 && Grade <= 3.49)
+            {
+                Console.WriteLine("Poor");
+            }
+            if (Grade >= 3.50 && Grade <= 4.49)
+            {
+                Console.WriteLine("Good");
+            }
+            if (Grade >= 4.5 && Grade <= 5.49)
+            {
+                Console.WriteLine("Very good");
+            }
+            else if (Grade >= 5.5 && Grade <= 6)
+            {
+                Console.WriteLine("Excellent");
+            }
+        }
+    }
+}
