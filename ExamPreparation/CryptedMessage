@@ -1,0 +1,54 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ExamPrep
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string Message = Console.ReadLine();
+            string Command = Console.ReadLine();
+            while (Command!="Reveal")
+            {
+                string[] CommandArgms = Command.Split(":|:", StringSplitOptions.RemoveEmptyEntries);
+
+                string CommandType = CommandArgms[0];
+                if (CommandType== "InsertSpace")
+                {
+                    int insertIndex = int.Parse(CommandArgms[1]);
+                    Message = Message.Insert(insertIndex, " ");
+                }
+                else if (CommandType=="Reverse")
+                {
+                    string subString = CommandArgms[1];
+                    if (Message.Contains(subString))
+                    {
+                        int wordIndex = Message.IndexOf(subString);
+                        Message = Message.Remove(wordIndex, subString.Length);
+                        Message = Message + string.Join("", subString.Reverse());
+                    }
+                    else
+                    {
+                        Console.WriteLine("error");
+                        Command = Console.ReadLine();
+                        continue;
+                    }                                    
+                }
+                else if (CommandType=="ChangeAll")
+                {
+                    string SubString = CommandArgms[1];
+                    string ReplacementText = CommandArgms[2];
+                    Message = Message.Replace(SubString, ReplacementText);
+
+                }
+                Console.WriteLine(Message);
+
+                Command = Console.ReadLine();
+            }
+            Console.WriteLine($"You have a new text message: {Message}");
+        }
+    }
+}
