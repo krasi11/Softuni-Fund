@@ -1,0 +1,19 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+namespace Prep
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string expression = @"\+359([ -])2\1\d{3}\1\d{4}";
+            string text = Console.ReadLine();
+
+            MatchCollection matches = Regex.Matches(text, expression);
+            Console.WriteLine(string.Join(", ", matches));
+        }
+    }
+}
