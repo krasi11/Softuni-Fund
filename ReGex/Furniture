@@ -1,0 +1,36 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+namespace ExamPrep
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> Furniture = new List<string>();
+
+            double total = 0d;
+            string Expression = @"(>>)[A-Za-z]{1,}(<<)[0-9]{1,}.{0,1}[0-9]{1,}![0-9]{1,}";
+            string[] splitters = new string[] { ">>", "<<", "!" };
+
+            string Command = Console.ReadLine();
+            while (Command!="Purchase")
+            {
+                Match match = Regex.Match(Command, Expression);
+
+                if (match.Captures.Count>0)
+                {
+                    string[] splitted = match.Value.Split(splitters, StringSplitOptions.RemoveEmptyEntries);
+                    Furniture.Add(splitted[0]);
+                    total += double.Parse(splitted[1]) * double.Parse(splitted[2]);
+                }
+                Command = Console.ReadLine();
+            }
+            Console.WriteLine($"Bought furniture:");
+            Furniture.ForEach(x => Console.WriteLine(x));
+            Console.WriteLine($"Total money spend: {total:F2}");
+        }
+    }
+}
