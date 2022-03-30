@@ -1,0 +1,42 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ClassAndObj
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<string, int> Materials = new Dictionary<string, int>();
+            int count = 1;
+            string previous = null;
+            string command = Console.ReadLine();
+            while (!command.Contains("stop"))
+            {
+                bool IsEven = count % 2 == 0;
+                var isNumeric = int.TryParse(command, out _);
+                if (!isNumeric)
+                {
+                    previous = command;
+                }
+                if (!IsEven)
+                {
+                    if (!Materials.ContainsKey(command))
+                    {
+                        Materials.Add(command, 0);
+                    }
+                }
+                else
+                {
+                    int quantity = int.Parse(command);
+                    Materials[previous] += quantity;
+                }
+                count++;
+                command = Console.ReadLine();
+            }
+            Materials.ToList().ForEach(x => Console.WriteLine($"{x.Key} -> {x.Value}"));
+        }
+    }
+}
