@@ -1,0 +1,39 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ClassAndObj
+{
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int counts = int.Parse(Console.ReadLine());
+
+            Dictionary<string, List<string>> synonymList = new Dictionary<string, List<string>>();
+
+            for (int i = 0; i < counts; i++)
+            {
+                string keyWord = Console.ReadLine();
+                string synonym = Console.ReadLine();
+                if (synonymList.ContainsKey(keyWord))
+                {
+                    synonymList[keyWord].Add(synonym);
+                }
+                else
+                {
+                    List<string> newSymList = new List<string>();
+                    newSymList.Add(synonym);
+
+                    synonymList.Add(keyWord, newSymList);
+                }
+            }
+            foreach (var item in synonymList)
+            {
+                Console.WriteLine($"{item.Key} - {string.Join(", ", item.Value)}");
+            }
+        }
+    }  
+}
