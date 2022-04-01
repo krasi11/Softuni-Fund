@@ -1,0 +1,53 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+namespace ExamPrep
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Regex Pattern = new Regex(@"(@|#)(?<firstWord>[a-zA-Z]{3,})(\1)(\1)(?<secondWord>[a-zA-Z]{3,})(\1)");
+            string Message = Console.ReadLine();
+
+            List<string[]> Results = new List<string[]>();
+
+            MatchCollection Matches = Pattern.Matches(Message);
+            
+            foreach (Match match in Matches)
+            {
+                string FirstWord = match.Groups[2].Value;
+                string SecondWord = match.Groups[5].Value;
+
+                string reverseSecondWord = string.Join(" ", SecondWord.Reverse());
+                
+
+                if (FirstWord == reverseSecondWord)
+                {
+                    Results.Add(new string[] { FirstWord, SecondWord });
+                }
+            }
+            if (Matches.Count == 0)
+            {
+                Console.WriteLine("No word pairs found!");
+            }
+            else
+            {
+                Console.WriteLine($"{Matches.Count} word pairs found!");
+            }
+
+            if (Results.Count == 0)
+            {
+                Console.WriteLine("No mirror words!");
+            }
+            else
+            {
+                Console.WriteLine("The mirror words are:");
+                Console.WriteLine(string.Join(", ", Results.Select(x => $"{x[0]} <=> {x[1]}")));
+            }
+
+        }   
+    }
+}
