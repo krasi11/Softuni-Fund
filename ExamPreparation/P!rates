@@ -1,0 +1,108 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+namespace ExamPrep
+{
+    class City
+    {
+       public City(string Name, int population, int gold)
+        {
+            this.Name = Name;
+            this.population = population;
+            this.gold = gold;
+
+        }
+        public string Name { get; set; }
+        public int population { get; set; }
+        public int gold { get; set; }
+    }
+      
+
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string FirstCommand = Console.ReadLine();
+            Dictionary<string, City> cities = new Dictionary<string, City>();
+
+            while (FirstCommand != "Sail")
+            {
+                string[] CommandArgs = FirstCommand.Split("||", StringSplitOptions.RemoveEmptyEntries);
+               
+
+                string cityName = CommandArgs[0];
+                int Population =int.Parse(CommandArgs[1]);
+                int Gold = int.Parse(CommandArgs[2]);
+
+                if (cities.ContainsKey(cityName))
+                {
+                    cities[cityName].population += Population;
+                    cities[cityName].gold += Gold;
+                }
+                else
+                {
+                    City newCity = new City(cityName, Population, Gold);
+                    cities.Add(cityName, newCity);
+                }
+
+                FirstCommand = Console.ReadLine();
+            }
+            string SecondCommand = Console.ReadLine();
+            while (SecondCommand!="End")
+            {
+                string[] commandArgms = SecondCommand.Split("=>", StringSplitOptions.RemoveEmptyEntries);
+                string Action = commandArgms[0];
+                if (Action == "Plunder")
+                {
+                    string TownToPlunder = commandArgms[1];
+                    int Population = int.Parse(commandArgms[2]);
+                    int goldie = int.Parse(commandArgms[3]);
+
+                    cities[TownToPlunder].population -= Population;
+                    cities[TownToPlunder].gold -= goldie;
+                    Console.WriteLine($"{TownToPlunder} plundered! {goldie} gold stolen, {Population} citizens killed.");
+                    if (cities[TownToPlunder].population == 0 || cities[TownToPlunder].gold == 0)
+                    {
+                        Console.WriteLine($"{TownToPlunder} has been wiped off the map!");
+                        cities.Remove(TownToPlunder);
+                    }
+
+                }
+                else if (Action == "Prosper")
+                {
+                    string TownToProsper = commandArgms[1];
+                    int goldToAdd = int.Parse(commandArgms[2]);
+                    if (goldToAdd < 0 )
+                    {
+                        Console.WriteLine($"Gold added cannot be a negative number!");
+                    }
+                    else
+                    {
+                        cities[TownToProsper].gold += goldToAdd;
+                        Console.WriteLine($"{goldToAdd} gold added to the city treasury. {TownToProsper} now has {cities[TownToProsper].gold} gold.");
+                    }
+
+                }
+                SecondCommand = Console.ReadLine();
+            }
+            if (cities.Count>0)
+            {
+                Console.WriteLine($"Ahoy, Captain! There are {cities.Count} wealthy settlements to go to:");
+                foreach (var item in cities)
+                {
+                    var City = item.Value;
+                    Console.WriteLine($"{City.Name} -> Population: {City.population} citizens, Gold: {City.gold} kg");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ahoy, Captain! All targets have been plundered and destroyed!");
+            }
+
+        }   
+    }
+}
