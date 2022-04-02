@@ -2,114 +2,26 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
-namespace ExamPrep
+
+namespace _01.ReverseStrings
 {
-    
-
-
-    class Program
+    internal class Program
     {
-        class Heroes
-        {
-            public Heroes(string Name, int hp, int mp)
-            {
-                this.Name = Name;
-                this.Hp = hp;
-                this.Mp = mp;
-            }
-            public string Name { get; set; }
-            public int Hp { get; set; }
-            public int Mp { get; set; }
-        }
-
         static void Main(string[] args)
         {
-            int numberOfHeroes = int.Parse(Console.ReadLine());
+            string command = Console.ReadLine();
 
-            List<Heroes> heroes = new List<Heroes>();
-            for (int i = 0; i < numberOfHeroes; i++)
+            while (command != "end")
             {
-                string[] InputTokens = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToArray();
+                char[] wordArr = command.ToCharArray();
+                Array.Reverse(wordArr);
+                string reversedWord = new string(wordArr);
 
-                string Name = InputTokens[0];
-                int HP = int.Parse(InputTokens[1]);
-                int MP = int.Parse(InputTokens[2]);
+                Console.WriteLine($"{command} = {reversedWord}");
 
-                heroes.Add(new Heroes(Name, HP, MP));
+                command = Console.ReadLine();
             }
-            string Command = Console.ReadLine();
-            while (Command!="End")
-            {
-                string[] CommandArgms = Command.Split(" - ", StringSplitOptions.RemoveEmptyEntries);
-                string Action = CommandArgms[0];
-                if (Action == "CastSpell")
-                {
-                    string HeroName = CommandArgms[1];
-                    int ManaNeeded = int.Parse(CommandArgms[2]);
-                    string SpellName = CommandArgms[3];
+        }
 
-                    Heroes hero = heroes.FirstOrDefault(x => x.Name == HeroName);
-                    if (hero.Mp>=ManaNeeded)
-                    {
-                        hero.Mp -= ManaNeeded;
-                        Console.WriteLine($"{hero.Name} has successfully cast {SpellName} and now has {hero.Mp} MP!");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{hero.Name} does not have enough MP to cast {SpellName}!");
-                    }
-                }
-                else if (Action == "TakeDamage")
-                {
-                    string DefenderName = CommandArgms[1];
-                    int Damage = int.Parse(CommandArgms[2]);
-                    string AttackerName = CommandArgms[3];
-
-                    Heroes Defender = heroes.FirstOrDefault(x => x.Name == DefenderName);
-
-                    Defender.Hp -= Damage;
-                    if (Defender.Hp > 0)
-                    {
-                        Console.WriteLine($"{DefenderName} was hit for {Damage} HP by {AttackerName} and now has {Defender.Hp} HP left!");
-                    }
-                    else
-                    {
-                        heroes.Remove(Defender);
-                        Console.WriteLine($"{DefenderName} has been killed by {AttackerName}!");
-                    }
-                }
-                else if (Action == "Recharge")
-                {
-                    string HeroName = CommandArgms[1];
-                    int ManaRegen = int.Parse(CommandArgms[2]);
-
-                    Heroes hero = heroes.FirstOrDefault(x => x.Name == HeroName);
-
-                    int Recharged = hero.Mp + ManaRegen >= 200 ? 200 - hero.Mp : ManaRegen;
-                    Console.WriteLine($"{hero.Name} recharged for {Recharged} MP!");
-                    hero.Mp += Recharged;
-                }
-                else if (Action == "Heal")
-                {
-                    string heroName = CommandArgms[1];
-                    int health = int.Parse(CommandArgms[2]);
-
-                    Heroes hero = heroes.FirstOrDefault(x => x.Name == heroName);
-
-                    int recharged = hero.Hp + health >= 100 ? 100 - hero.Hp : health;
-
-                    Console.WriteLine($"{hero.Name} healed for {recharged} HP!");
-                    hero.Hp += recharged;
-                }
-                Command = Console.ReadLine();
-            }
-            foreach (var hero in heroes)
-            {
-                Console.WriteLine(hero.Name);
-                Console.WriteLine($"  HP: {hero.Hp}");
-                Console.WriteLine($"  MP: {hero.Mp}");
-            }
-        }   
     }
 }
