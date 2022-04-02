@@ -1,0 +1,104 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+namespace ExamPrep
+{
+    class City
+    {
+       public City(string Name, int population, int gold)
+        {
+            this.Name = Name;
+            this.population = population;
+            this.gold = gold;
+
+        }
+        public string Name { get; set; }
+        public int population { get; set; }
+        public int gold { get; set; }
+    }
+      
+
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string rawPassword = Console.ReadLine();
+            string Command = Console.ReadLine();
+
+            while (Command != "Generate")
+            {
+                string[] CommandArgms = Command.Split(">>>", StringSplitOptions.RemoveEmptyEntries);
+
+                string Action = CommandArgms[0];
+
+                if (Action == "Contains" )
+                {
+                    string subString = CommandArgms[1];
+                    if (rawPassword.Contains(subString))
+                    {
+                        Console.WriteLine($"{rawPassword} contains {subString}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Substring not found!");
+                    }
+                }
+                else if (Action == "Flip")
+                {
+                    if (CommandArgms[1] == "Upper")
+                    {
+                        int startIndex = int.Parse(CommandArgms[2]);
+                        int endIndex = int.Parse(CommandArgms[3]);
+                        int validStartIndex = Math.Max(0, startIndex);
+                        int validEndIndex = Math.Min(rawPassword.Length - 1, endIndex);
+                        if (validEndIndex >= validStartIndex)
+                        {
+                            int subtringToReplaceLength = endIndex - startIndex;
+                            string substringToReplace = rawPassword.Substring(startIndex, subtringToReplaceLength);
+                            string newString = substringToReplace.ToUpper();
+                            rawPassword = rawPassword.Replace(substringToReplace, newString);
+                        }
+                        Console.WriteLine(rawPassword);
+                    }
+                    else if (CommandArgms[1] == "Lower")
+                    {
+                        int startIndex = int.Parse(CommandArgms[2]);
+                        int endIndex = int.Parse(CommandArgms[3]);
+                        int validStartIndex = Math.Max(0, startIndex);
+                        int validEndInex = Math.Min(rawPassword.Length - 1, endIndex);
+                        if (validEndInex >= validStartIndex)
+                        {
+                            int subtringToReplaceLength = endIndex - startIndex;
+                            string substringToReplace = rawPassword.Substring(validStartIndex, subtringToReplaceLength);
+                            string newString = substringToReplace.ToLower();
+                            rawPassword = rawPassword.Replace(substringToReplace, newString);
+                        }
+
+                        Console.WriteLine(rawPassword);
+
+                    }
+                }
+                else if (Action == "Slice")
+                {
+                    int startIndex = int.Parse(CommandArgms[1]);
+                    int endIndex = int.Parse(CommandArgms[2]);
+                    int validStartIndex = Math.Max(0, startIndex);
+                    int validEndIndex = Math.Min(rawPassword.Length - 1, endIndex);
+                    if (validEndIndex>=validStartIndex)
+                    {
+                        int subStringToRemoveLenght = validEndIndex - validStartIndex;
+                        string stringToRemove = rawPassword.Substring(validStartIndex, subStringToRemoveLenght);
+                        rawPassword = rawPassword.Replace(stringToRemove, new string(""));
+                    }
+                    Console.WriteLine(rawPassword);
+                }
+                Command = Console.ReadLine();
+            }
+            Console.WriteLine($"Your activation key is: { rawPassword}");
+        }   
+    }
+}
