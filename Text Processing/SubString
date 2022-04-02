@@ -1,0 +1,22 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace ClassAndObj
+{
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string wordToDelete = Console.ReadLine();
+            string text = Console.ReadLine();
+            while (text.Contains(wordToDelete))
+            {
+                int StartIndexOfWord = text.IndexOf(wordToDelete);
+                text = text.Remove(StartIndexOfWord, wordToDelete.Length);                
+            }
+            Console.WriteLine(text);
+        }
+    }  
+}
