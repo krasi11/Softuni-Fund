@@ -1,0 +1,54 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+namespace ExamPrep
+{
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string pattern = @"(:{2}|\*{2})(?<emojiName>[A-Z][a-z]{2,})\1";
+            string digitPattern = @"\d";
+
+            string inputText = Console.ReadLine();
+
+            List<string> Emoji = new List<string>();
+            long coolThershold = 1;
+            int EmojiCount = 0;
+
+            MatchCollection Matches = Regex.Matches(inputText, pattern);
+            MatchCollection digitMatches = Regex.Matches(inputText, digitPattern);
+
+            foreach (Match digit in digitMatches)
+            {
+                coolThershold *= int.Parse(digit.Value);
+            }
+            foreach (Match match in Matches)
+            {
+                string name = match.Groups["emojiName"].Value;
+                int sumNameAsDigit = 0;
+                EmojiCount++;
+
+                for (int i = 0; i < name.Length; i++)
+                {
+                    char currChar = name[i];
+                    sumNameAsDigit += currChar;
+                }
+                if (sumNameAsDigit > coolThershold)
+                {
+                    Emoji.Add(match.Value);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            Console.WriteLine($"Cool threshold: {coolThershold}");
+            Console.WriteLine($"{EmojiCount} emojis found in the text. The cool ones are:");
+            Console.WriteLine(string.Join("\n", Emoji));
+        }   
+    }
+}
