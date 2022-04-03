@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ex1_try2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            {
+                List<string> descList1 = Console.ReadLine().Split(" | ").ToList();
+                var wordDict = new Dictionary<string, List<string>>();
+                List<string> words = Console.ReadLine().Split(" | ").ToList();
+                string command = Console.ReadLine().ToLower();
+                List<string> abv = new List<string>();
+                int b;
+                for (int i = 0; i < descList1.Count; i++)
+                {
+
+                    abv = descList1[i].Split(": ").ToList();
+                    if (wordDict.ContainsKey(abv[0]) == false)
+                    {
+                        wordDict.Add(abv[0], new List<string>());
+                    }
+                    for (b = 1; b < abv.Count; b++)
+                    {
+
+                        wordDict[abv[0]].Add(abv[b]);
+                    }
+                    b = 1;
+                    abv.Clear();
+                }
+                foreach (var item in words)
+                {
+                    if (wordDict.ContainsKey(item))
+                    {
+                        Console.WriteLine(item);
+                        var li = wordDict[item];
+                        li = li.OrderBy(x => x.Length).Reverse().ToList();
+                        foreach (var wo in li)
+                        {
+                            Console.WriteLine($" -{wo}");
+                        }
+                    }
+                }
+                if (command == "end")
+                {
+                    return;
+                }
+                else if (command == "list")
+                {
+                    var keys = wordDict.Keys.OrderBy(x => x).ToList();
+                    Console.WriteLine(string.Join(' ', keys));
+                }
+            }
+        }
+    }
+}
