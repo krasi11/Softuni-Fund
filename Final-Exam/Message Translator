@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
+namespace Message_Translator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int lines = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < lines; i++)
+            {
+                string input = Console.ReadLine();
+
+                Match match = Regex.Match(input, @"!(?<first>[A-Z][a-z]{2,})!:\[(?<second>[A-Za-z]{8,})\]");
+                string numbers = String.Empty;
+                if (match.Success)
+                {
+                    string action = match.Groups["first"].Value;
+                    string word = match.Groups["second"].Value;
+                    List<int> list = new List<int>();
+                    for (int b = 0; b < word.Length; b++)
+                    {
+                        int number = word[b];
+                        list.Add(number);
+                    }
+                    Console.WriteLine($"{action}: {string.Join(" ", list)}");
+                }
+                else Console.WriteLine("The message is invalid");
+            }
+
+        }
+    }
+}
