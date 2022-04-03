@@ -1,0 +1,48 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace ClassAndObj
+{
+
+    internal class Program
+    {
+        class Student 
+        {
+            public Student(string FirstName,string LastName,float Age)
+            {
+                this.firstName = FirstName;
+                this.lastName = LastName;
+                this.age = Age;
+            }
+            public string firstName { get; set; }
+            public string lastName { get; set; }
+            public float age { get; set; }
+            public override string ToString()
+            {
+                return $"{this.firstName} {this.lastName}: {this.age:F2}";
+            }
+
+        }
+        static void Main(string[] args)
+        {
+            List<Student> Students = new List<Student>();
+            int CountStudents = int.Parse(Console.ReadLine());
+            for (int i = 0; i < CountStudents; i++)
+            {
+                string[] StudentArguments = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToArray();
+                string CurrentStudentFIrstName = StudentArguments[0];
+                string CurrentStudentLastName = StudentArguments[1];
+                float CurrentStudentAge = float.Parse(StudentArguments[2]);
+
+                Student CurrentStudent = new Student(CurrentStudentFIrstName,CurrentStudentLastName,CurrentStudentAge);
+                Students.Add(CurrentStudent);
+            }
+            List<Student> DescendingOrder = Students.OrderByDescending(s => s.age).ToList();
+            foreach(Student student in DescendingOrder)
+            {
+                Console.WriteLine(student);
+            }                     
+        }
+    }  
+}
