@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Messages_Manager
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int capacity = int.Parse(Console.ReadLine());
+
+            Dictionary<string, List<int>> users = new Dictionary<string, List<int>>();
+
+            string command = Console.ReadLine();
+
+            while (command != "Statistics")
+            {
+                string[] cmd = command.Split("=", StringSplitOptions.RemoveEmptyEntries);
+
+                if (cmd[0] == "Add")
+                {
+                    if (!users.ContainsKey(cmd[1]))
+                    {
+                        users.Add(cmd[1], new List<int>());
+                        users[cmd[1]].Add(int.Parse(cmd[2]));
+                        users[cmd[1]].Add(int.Parse(cmd[3]));
+                    }
+                }
+                if (cmd[0] == "Message")
+                {
+                    string firstUser = cmd[1];
+                    string secndUser = cmd[2];
+
+                    if (users.ContainsKey(firstUser) && users.ContainsKey(secndUser))
+                    {
+                        users[firstUser][0]++;
+                        users[secndUser][1]++;
+                        if (users[firstUser].Sum() >= capacity)
+                        {
+                            users.Remove(firstUser);
+                            Console.WriteLine($"{firstUser} reached the capacity!");
+                        }
+                        if (users[secndUser].Sum() >= capacity)
+                        {
+                            users.Remove(secndUser);
+                            Console.WriteLine($"{secndUser} reached the capacity!");
+                        }
+                    }
+
+                }
+                if (cmd[0] == "Empty")
+                {
+                    if (cmd[1] == "All")
+                    {
+                        users.Clear();
+                    }
+                    else
+                    {
+                        if (users.ContainsKey(cmd[1]))
+                        {
+                            users.Remove(cmd[1]);
+                        }
+                    }
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine($"Users count: {users.Count}");
+            foreach (var user in users)
+            {
+                int sum = user.Value.Sum();
+                Console.WriteLine($"{user.Key} - {sum}");
+            }
+        }
+    }
+}
