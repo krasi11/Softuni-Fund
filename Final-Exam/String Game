@@ -1,0 +1,86 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+namespace ExamPrep
+{
+    
+
+
+    class Program
+    {
+ 
+        static void Main(string[] args)
+        {
+            string Graph = Console.ReadLine();
+
+            string Command = Console.ReadLine();
+            while (Command!="Done")
+            {
+                string[] CommandArgs = Command.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                string Action = CommandArgs[0];
+                if (Action == "Change")
+                {
+                    string CharToReplace = CommandArgs[1];
+                    string wordToReplaceWith = CommandArgs[2];
+                    Graph = Graph.Replace(CharToReplace, wordToReplaceWith);
+                    Console.WriteLine(Graph);
+                }
+                else if (Action == "Includes")
+                {
+                    string SubString = CommandArgs[1];
+                    bool Isthere = false;
+                    if (Graph.Contains(SubString))
+                    {
+                        Isthere = true;
+                        Console.WriteLine(Isthere);
+                    }
+                    else
+                    {
+                        Isthere = false;
+                        Console.WriteLine(Isthere);
+                    }
+
+                }
+                else if (Action == "End")
+                {
+                    string SubStringg = CommandArgs[1];
+                    bool IsTrue = false;
+                    if (Graph.EndsWith(SubStringg))
+                    {
+                        IsTrue = true;
+                        Console.WriteLine(IsTrue);
+                    }
+                    else
+                    {
+                        Console.WriteLine(IsTrue);
+                    }
+                }
+                else if (Action == "Uppercase")
+                {
+                    Graph = Graph.ToUpper();
+                    Console.WriteLine(Graph);
+                }
+                else if (Action == "FindIndex")
+                {
+                    char IndexToFind = char.Parse(CommandArgs[1]);
+                   int index=  Graph.IndexOf(IndexToFind, 0);
+                    Console.WriteLine(index);
+
+                }
+                else if (Action == "Cut")
+                {
+                    int startIndex = int.Parse(CommandArgs[1]);
+                    int cutCount = int.Parse(CommandArgs[2]);
+
+                    string stringToRemove = Graph.Substring(startIndex, cutCount);
+                    Graph = Graph.Replace(stringToRemove, new string(" "));
+                    Console.WriteLine(stringToRemove);
+                }
+
+                Command = Console.ReadLine();
+            }   
+        }   
+    }
+}
