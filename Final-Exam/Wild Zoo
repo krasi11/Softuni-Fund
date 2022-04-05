@@ -1,0 +1,104 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+ 
+namespace exercise3
+{
+    public class Animal
+    {
+        public Animal(string name, double foodNeeded, string area)
+        {
+            Name = name;
+            FoodNeeded = foodNeeded;
+            Area = area;
+        }
+ 
+        public string Name { get; set; }
+        public double FoodNeeded { get; set; }
+        public string Area { get; set; }
+ 
+        public override string ToString()
+        {
+            return $"{Name} -> {FoodNeeded}g";
+        }
+    }
+ 
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Animal> hungryAnimals = new List<Animal>();
+            Dictionary<string, int> areaInfo = new Dictionary<string, int>();
+ 
+            string input = Console.ReadLine();
+ 
+            while (input != "EndDay")
+            {
+                string[] token = input.Split(new char[] { ':', ' ',}, StringSplitOptions.RemoveEmptyEntries);
+                string command = token[0];
+ 
+                string[] animalsInfo = token[1].Split("-", StringSplitOptions.RemoveEmptyEntries);
+                string animalName = animalsInfo[0];
+                double food = double.Parse(animalsInfo[1]);
+ 
+                if (command == "Add")
+                {
+                    string area = animalsInfo[2];
+ 
+                    bool isAnimalExist = hungryAnimals.Any(x => x.Name == animalName);
+ 
+                    if (isAnimalExist)
+                    {
+                        Animal existedAnimal = hungryAnimals.First(x=>x.Name == animalName);
+                        existedAnimal.FoodNeeded += food;
+                    }
+                    else
+                    {
+                        Animal animal = new Animal(animalName, food, area);
+                        hungryAnimals.Add(animal);
+ 
+                        if (!areaInfo.ContainsKey(area))
+                        {
+                            areaInfo.Add(area, 0);
+                        }
+ 
+                        areaInfo[area]++;
+                    }
+                }
+                else if (command == "Feed")
+                {
+                    bool isAnimalExist = hungryAnimals.Any(x => x.Name == animalName);
+ 
+                    if (isAnimalExist)
+                    {
+                        Animal animal = hungryAnimals.First(x => x.Name == animalName);
+                        animal.FoodNeeded -= food;
+ 
+                        if (animal.FoodNeeded <= 0)
+                        {
+                            areaInfo[animal.Area]--;
+                            hungryAnimals.Remove(animal);
+                            Console.WriteLine($"{animalName} was successfully fed");
+                        }
+                    }
+                }
+ 
+                input = Console.ReadLine();
+            }
+ 
+            Console.WriteLine("Animals:");
+ 
+            foreach (var animal in hungryAnimals)
+            {
+                Console.WriteLine($" {animal.ToString()}");
+            }
+ 
+            Console.WriteLine("Areas with hungry animals:");
+ 
+            foreach (var kvp in areaInfo.Where(x=>x.Value > 0))
+            {
+                Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+            }
+        }
+    }
+}
