@@ -1,0 +1,85 @@
+using System;
+ 
+namespace Best_Player
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string championShip = Console.ReadLine();
+            string ticketType = Console.ReadLine();
+            int countTicket = int.Parse(Console.ReadLine());
+            string picture = Console.ReadLine();
+            double price = 0;
+ 
+            if (ticketType=="Standard")
+            {
+                if (championShip== "Quarter final")
+                {
+                    price = 55.50 * countTicket;
+                }
+                else if (championShip == "Semi final")
+                {
+                    price = 75.88 * countTicket;
+                }
+                else if (championShip=="Final")
+                {
+                    price = 110.10 * countTicket;
+                }
+            }
+            if (ticketType == "Premium")
+            {
+                if (championShip == "Quarter final")
+                {
+                    price = 105.20 * countTicket;
+                }
+                else if (championShip == "Semi final")
+                {
+                    price = 125.22 * countTicket;
+                }
+                else if (championShip == "Final")
+                {
+                    price = 160.66 * countTicket;
+                }
+            }
+            if (ticketType == "VIP")
+            {
+                if (championShip == "Quarter final")
+                {
+                    price = 118.90 * countTicket;
+                }
+                else if (championShip == "Semi final")
+                {
+                    price = 300.40 * countTicket;
+                }
+                else if (championShip == "Final")
+                {
+                    price = 400 * countTicket;
+                }
+            }
+ 
+            if (price > 4000)
+            {
+                price *= 0.75;
+            }
+            else if (price > 2500)
+            {
+                price *= 0.90;
+ 
+                if (picture =="Y")
+                {
+                    price += countTicket * 40;
+                }
+            }
+            else if (price <2500)
+            {      
+                if (picture=="Y")
+                {
+                price += countTicket * 40;
+                }
+            }
+ 
+            Console.WriteLine($"{price:f2}");
+        }
+    }
+}
